@@ -29,7 +29,7 @@ app.listen(port, () => {
 });
 
 
-app.get('/', function(request, response) {
+app.get('/home', function(request, response) {
 	response.render('homepage.hbs', {
 		pages: ['planet_finder', 'cards']
 	})
@@ -37,7 +37,9 @@ app.get('/', function(request, response) {
 
 
 app.get('/planet_finder', function(request, response) {
-	response.render('planet_finder.hbs')
+	response.render('planet_finder.hbs', {
+		pages: ['home', 'cards']
+	})
 })
 // app.get('/planet', function(request, response) {
 // 	response.render('planet.hbs')
@@ -51,7 +53,8 @@ app.get('/cards', function(request, response) {
 			results.cards[2].image,
 			results.cards[3].image,
 			results.cards[4].image
-			]
+			],
+			pages: ['', 'planet_finder', 'home']
 		});
 		console.log(results.cards[0].image);
     }).catch((e) => {
@@ -71,7 +74,6 @@ app.post('/auth', async (request, response) => {
 			results[1].links[0].href,
 			results[2].links[0].href
 			]
-
 		});
     }).catch((e) => {
     	response.render("error.hbs", {

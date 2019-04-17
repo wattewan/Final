@@ -32,9 +32,25 @@
             font-weight: bold;
             color: #ffffff;
         }
+        .link_button {
+          background-color: #4CAF50; /* Green */
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+        }
+
+
+
     </style>
 </head>
 <body>
+<a href="{{pages.[0]}}" class="link_button"> {{pages.[0]}} </a>
+<a href="{{pages.[1]}}" class="link_button"> {{pages.[1]}} </a>
+<br>
 <div class="login-form">
     <h1>Enter Planet Name</h1>
     <form action="auth" method="POST">
