@@ -5,7 +5,7 @@ var getCardDeck = () => {
     return new Promise((resolve, reject) => {
 
         request({
-            url: `https://deckofcardsapi.com/api/deck/new/`,
+            url: `https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1`,
             json: true
 
         }, (error, response, body) => {
