@@ -2,6 +2,9 @@ const express = require('express');
 const hbs = require('hbs');
 const bodyParser = require('body-parser');
 const nasa = require('./nasa.js')
+const cards = require('./cards.js')
+const five = require('./draw_five.js')
+const deck = require('./deck.js')
 
 var session = require('express-session');
 const port = process.env.PORT || 8080;
@@ -41,7 +44,21 @@ app.get('/planet_finder', function(request, response) {
 // })
 
 app.get('/cards', function(request, response) {
-	response.render('cards.hbs')
+	deck.getDeck().then((results) => {
+		response.render(`cards.hbs`, {
+			images: [results.cards[0].image, 
+			results.cards[1].image,
+			results.cards[2].image,
+			results.cards[3].image,
+			results.cards[4].image
+			]
+		});
+		console.log(results.cards[0].image);
+    }).catch((e) => {
+    	response.render("error.hbs", {
+    		error: "Error: " + e
+    	})
+    })
 })
 
 
@@ -57,7 +74,9 @@ app.post('/auth', async (request, response) => {
 
 		});
     }).catch((e) => {
-        console.log("Error: " + e);
+    	response.render("error.hbs", {
+    		error: "Error: " + e
+    	})
     })
     // var username = request.body.username;
     // console.log(username);
