@@ -1,6 +1,7 @@
 const express = require('express');
 const hbs = require('hbs');
 const bodyParser = require('body-parser');
+const nasa = require('./nasa.js')
 
 var session = require('express-session');
 const port = process.env.PORT || 8080;
@@ -26,15 +27,41 @@ app.listen(port, () => {
 
 
 app.get('/', function(request, response) {
-	response.render('homepage.hbs')
+	response.render('homepage.hbs', {
+		pages: ['planet_finder', 'cards']
+	})
 });
+
+
+app.get('/planet_finder', function(request, response) {
+	response.render('planet_finder.hbs')
+})
+// app.get('/planet', function(request, response) {
+// 	response.render('planet.hbs')
+// })
+
+app.get('/cards', function(request, response) {
+	response.render('cards.hbs')
+})
+
+
 
 app.post('/auth', async (request, response) => {
 
-	console.log(request.body.username);
+	nasa.getNasaImage(request.body.username).then((results) => {
+		response.render(`planet.hbs`, {
+			images: [results[0].links[0].href, 
+			results[1].links[0].href,
+			results[2].links[0].href
+			]
+
+		});
+    }).catch((e) => {
+        console.log("Error: " + e);
+    })
     // var username = request.body.username;
     // console.log(username);
-    response.redirect(`/`);
+    
 
 });
 
